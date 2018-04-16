@@ -13,7 +13,7 @@ setup.kibana:
 output.elasticsearch:
   hosts: ["elasticsearch:9200"]
   username: "elastic"
-  password: "secret"
+  password: "changeme"
   indices:
     - index: "apm-%{[beat.version]}-sourcemap"
       when.contains:

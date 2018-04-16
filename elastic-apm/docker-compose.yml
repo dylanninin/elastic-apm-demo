@@ -43,7 +43,7 @@ services:
     volumes:
       - "esdata:/usr/share/elasticsearch/data"
     healthcheck:
-      test: ['CMD', 'curl', '-f', '-u', 'elastic:secret', 'http://localhost:9200']
+      test: ['CMD', 'curl', '-f', '-u', 'elastic:changeme', 'http://localhost:9200']
 
 volumes:
   esdata:
