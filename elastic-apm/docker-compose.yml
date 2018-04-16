@@ -1,0 +1,53 @@
+version: "2.2"
+services:
+  # https://www.elastic.co/guide/en/apm/server/current/running-on-docker.html
+  server:
+    image: docker.elastic.co/apm/apm-server:6.2.3
+    container_name: apm-server
+    ports:
+      - 8200:8200
+    networks:
+      - apm-net
+    volumes:
+      - "./apm-server.yml:/usr/share/apm-server/apm-server.yml"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+  # https://www.elastic.co/guide/en/kibana/current/_configuring_kibana_on_docker.html
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.2.3
+    container_name: apm-kibana
+    ports:
+      - 5601:5601
+    networks:
+      - apm-net
+    volumes:
+      - "./kibana.yml:/usr/share/kibana/config/kibana.yml"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+  # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.3
+    container_name: apm-es
+    environment:
+      - "ELASTIC_PASSWORD=changeme"
+      - "http.host=0.0.0.0"
+      - "transport.host=127.0.0.1"
+    ports:
+      - 9200:9200
+    networks:
+      - apm-net
+    volumes:
+      - "esdata:/usr/share/elasticsearch/data"
+    healthcheck:
+      test: ['CMD', 'curl', '-f', '-u', 'elastic:secret', 'http://localhost:9200']
+
+volumes:
+  esdata:
+    driver: local
+
+networks:
+  apm-net:
