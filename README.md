@@ -24,7 +24,8 @@ This project is a demo to show feature and usage of elastic apm, based on docker
 
 - run elastic apm: `docker-compose -f elastic-apm/docker-compose.yml up -d`
 - wait for several seconds, and then open: `http://localhost:5601/app/apm`
-- install requirements: `pip install -r requirements.txt`
+- install requirements: `pipenv install`
+- get into virtualenv: `pipenv shell`
 - initialize database to setup schema: `./manage.py init_db`
 - run python agent to upload data: `./manage.py runserver`
 - submit some requests:
@@ -62,3 +63,4 @@ This project is a demo to show feature and usage of elastic apm, based on docker
 - [Flask support | APM Python Agent](https://www.elastic.co/guide/en/apm/agent/python/2.x/flask-support.html)
 - [Digital Performance Monitoring and Management | New Relic](https://newrelic.com/)
 - [Sentry | Error Tracking Software — JavaScript, Python, PHP, Ruby, more](https://sentry.io/welcome/)
+- [pypa/pipenv: Python Development Workflow for Humans.](https://github.com/pypa/pipenv)
